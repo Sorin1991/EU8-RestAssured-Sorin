@@ -23,7 +23,7 @@ public class CBTrainingApiWithJsonPath {
     @DisplayName("GET Request to individual student")
     @Test
     public void test1(){
-        //send a get request to student id 23401 as a path parameter
+        //send a get request to student id 32701 as a path parameter
         //verify status code=200 /content type=application/json;charset=UTF -8 /Content-Encoding = gzip
         //verify Date header exists
         //assert that
