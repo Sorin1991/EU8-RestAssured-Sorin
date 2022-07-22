@@ -78,14 +78,12 @@ public class HamcrestMatchersApiTest {
 
         given()
                 .accept(ContentType.JSON)
-                .and()
-                .pathParam("id", 20450)
                 .when()
                 .get("http://api.cybertektraining.com/teacher/all")
                 .then()
                 .statusCode(200)
                 .and()
-                .body("teacher.firstName", hasItems("Alexander","Darleen","Sean"));
+                .body("teachers.firstName",hasItems("Alexander","Andrii","Ilda"));
 
 
 
