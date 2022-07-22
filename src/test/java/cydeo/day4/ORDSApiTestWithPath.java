@@ -2,6 +2,7 @@ package cydeo.day4;
 
 import cydeo.utilities.HRTestBase;
 import io.restassured.http.ContentType;
+import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -90,6 +91,28 @@ public class ORDSApiTestWithPath extends HRTestBase {
     Task
     print each name of IT_PROGs
      */
+
+    @Test
+    public void test3(){
+
+        Response response = given().accept(ContentType.JSON)
+                .and().queryParam("q", "{\"job_id\": \"IT_PROG\"}")
+                .when()
+                .get("employees");
+
+        assertEquals(200, response.statusCode());
+        assertEquals("application/json", response.header("Content-Type"));
+        assertTrue(response.body().asString().contains("IT_PROG"));
+
+        JsonPath jsonPath = response.jsonPath();
+        List<String> namesOfItProg = jsonPath.getList("items.findAll {it.job_id == /IT_PROG/}.first_name");
+
+        System.out.println(namesOfItProg);
+
+
+
+
+    }
 
 
 }
