@@ -41,7 +41,8 @@ public class HamcrestMatchersApiTest {
                 .body("id", equalTo(15),
                         "name", is("Meta"),
                         "gender", is("Female"),
-                        "phone", is(1938695106));
+                        "phone", is(1938695106))
+                .log().all();
     }
 
     @DisplayName("CBTraining Teacher request with chaining and matchers")
