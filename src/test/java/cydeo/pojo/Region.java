@@ -11,6 +11,7 @@ import java.util.List;
 @ToString
 public class Region {
 
+    //region_id
     private int region_id;
     private String region_name;
     private List<Link> links;
