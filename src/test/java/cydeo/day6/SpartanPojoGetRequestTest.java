@@ -8,6 +8,9 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
+
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -57,9 +60,11 @@ public class SpartanPojoGetRequestTest extends SpartanTestBase {
         JsonPath jsonPath = given().accept(ContentType.JSON)
                 .and().queryParams("nameContains", "a",
                         "gender", "Male")
-                .when().get("/api/spartans/search")
-                .then().statusCode(200)
-                .extract().jsonPath();
+                .when()
+                        .get("/api/spartans/search")
+                .then()
+                        .statusCode(200)
+                        .extract().jsonPath();
 
         //get the first spartan from content list and inside spartan object
 
@@ -77,15 +82,35 @@ public class SpartanPojoGetRequestTest extends SpartanTestBase {
         Response response = given().accept(ContentType.JSON)
                 .and().queryParams("nameContains", "a",
                         "gender", "Male")
-                .when().get("/api/spartans/search")
-                .then().statusCode(200)
+                .when()
+                        .get("/api/spartans/search")
+                .then()
+                        .statusCode(200)
                 .extract().response();
 
         Search searchResult = response.as(Search.class);
 
         System.out.println(searchResult.getContent().get(0).getName());
 
+    }
+
+    @DisplayName("GET /spartans/search and save as List<Spartan>")
+    @Test
+    public void test4(){
+
+        List<Spartan> spartanList = given().accept(ContentType.JSON)
+                .and().queryParams("nameContains", "a",
+                        "gender", "Male")
+                .when()
+                .get("/api/spartans/search")
+                .then()
+                .statusCode(200)
+                .extract().jsonPath().getList("content", Spartan.class);
+
+        System.out.println(spartanList.get(1).getName());
+
 
     }
+
 
 }
