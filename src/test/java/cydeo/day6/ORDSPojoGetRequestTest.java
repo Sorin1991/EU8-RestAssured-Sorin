@@ -1,9 +1,11 @@
 package cydeo.day6;
 
+import cydeo.pojo.Employee;
 import cydeo.pojo.Link;
 import cydeo.pojo.Region;
 import cydeo.utilities.HRTestBase;
 import io.restassured.path.json.JsonPath;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.*;
@@ -36,6 +38,23 @@ public class ORDSPojoGetRequestTest extends HRTestBase {
         Link link1 = region1.getLinks().get(0);
         System.out.println("link1.getHref() = " + link1.getHref());
         */
+
+    }
+
+
+    @DisplayName("GET request to / employees and only get couple of values as a Pojo class")
+    @Test
+    public void employeeGet(){
+
+        Employee employee1 = get("/employees").then().statusCode(200)
+                .extract().jsonPath().getObject("items[0]", Employee.class);
+
+        //we are getting error following exception
+        //com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException: Unrecognized field "employee_id"
+
+        //after we put annotation in Employee class @JsonIgnoreProperties(ignoreUnknown = true) and will work
+        System.out.println(employee1);
+
 
     }
 
